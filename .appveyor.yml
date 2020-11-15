@@ -49,8 +49,8 @@ install:
       (New-Object Net.WebClient).DownloadFile('https://s3-us-west-2.amazonaws.com/qgroundcontrol/dependencies/gstreamer-1.0-devel-x86_64-1.14.4.msi', $zipPath)
       Write-Host "Unzippind..."
       $dest = "$($env:APPVEYOR_BUILD_FOLDER)\($env:EXTRA_LIB)"
-      cmd /c start /wait 7z x $zipPath -o$dest
-      Write-Host "Unzipped in $dest" -ForegroundColor Green
+      cmd /c start /wait 7z x %zipPath% -o%dest%
+      Write-Host "Unzipped in %dest%" -ForegroundColor Green
 
 build_script:
   - mkdir %SHADOW_BUILD_DIR% && cd %SHADOW_BUILD_DIR% && %QT_QMAKE_DIR%\qmake -r CONFIG+=%CONFIG% %APPVEYOR_BUILD_FOLDER%\qgroundcontrol.pro
