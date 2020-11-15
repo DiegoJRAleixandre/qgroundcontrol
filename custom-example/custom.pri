@@ -49,6 +49,13 @@ QGC_ANDROID_PACKAGE = "org.custom.qgroundcontrol"
 QGC_APP_DESCRIPTION = "Custom QGroundControl"
 QGC_APP_COPYRIGHT   = "Copyright (C) 2020 QGroundControl Development Team. All rights reserved."
 
+
+# or-tools lib
+ORTOOLS_PATH = $$PWD/or-tools/
+INCLUDEPATH += $${ORTOOLS_PATH}/include
+LIBS += -L$${ORTOOLS_PATH}/lib -lCbc -lglog -lgflags -lCbcSolver -lCbc -lOsiCbc -lCgl -lClpSolver -lClp -lOsiClp -lOsi -lCoinUtils -lortools -lz -lrt -lpthread
+
+
 # Our own, custom resources
 RESOURCES += \
     $$PWD/custom.qrc
@@ -71,15 +78,18 @@ INCLUDEPATH += \
 
 INCLUDEPATH += \
     $$PWD/src/FirmwarePlugin \
-    $$PWD/src/AutoPilotPlugin
+    $$PWD/src/AutoPilotPlugin \
+    $$PWD/src/Test
 
 HEADERS+= \
     $$PWD/src/AutoPilotPlugin/CustomAutoPilotPlugin.h \
     $$PWD/src/FirmwarePlugin/CustomFirmwarePlugin.h \
     $$PWD/src/FirmwarePlugin/CustomFirmwarePluginFactory.h \
+    $$PWD/src/Test/test.h
 
 SOURCES += \
     $$PWD/src/AutoPilotPlugin/CustomAutoPilotPlugin.cc \
     $$PWD/src/FirmwarePlugin/CustomFirmwarePlugin.cc \
     $$PWD/src/FirmwarePlugin/CustomFirmwarePluginFactory.cc \
+    $$PWD/src/Test/test.h
 

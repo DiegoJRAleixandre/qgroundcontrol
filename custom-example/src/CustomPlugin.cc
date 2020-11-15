@@ -23,6 +23,7 @@
 #include "AppMessages.h"
 #include "QmlComponentInfo.h"
 #include "QGCPalette.h"
+#include "Test/test.h"
 
 QGC_LOGGING_CATEGORY(CustomLog, "CustomLog")
 
@@ -367,5 +368,6 @@ QQmlApplicationEngine* CustomPlugin::createQmlApplicationEngine(QObject* parent)
 {
     QQmlApplicationEngine* qmlEngine = QGCCorePlugin::createQmlApplicationEngine(parent);
     qmlEngine->addImportPath("qrc:/Custom/Widgets");
+    test(1, 2);
     return qmlEngine;
 }
