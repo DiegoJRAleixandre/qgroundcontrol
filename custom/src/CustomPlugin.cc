@@ -368,6 +368,7 @@ QQmlApplicationEngine* CustomPlugin::createQmlApplicationEngine(QObject* parent)
 {
     QQmlApplicationEngine* qmlEngine = QGCCorePlugin::createQmlApplicationEngine(parent);
     qmlEngine->addImportPath("qrc:/Custom/Widgets");
-    test(1, 2);
+    char message[4] = {'h', 'e', 'y', '\n'};
+    test(message);
     return qmlEngine;
 }
