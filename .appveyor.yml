@@ -12,7 +12,7 @@ environment:
     SHADOW_BUILD_DIR: C:\projects\qgroundcontrol\build_windows_install
     QT_JOM_DIR: C:\Qt-QGC-5.12.6\Tools\QtCreator\bin
     QT_QMAKE_DIR: C:\Qt-QGC-5.12.6\5.12.6\msvc2017_64\bin
-    EXTRA_LIB: custom-example\src\Test\or-tools
+    EXTRA_LIB: custom\src\Test\or-tools
 
 install:
   - git submodule update --init --recursive
