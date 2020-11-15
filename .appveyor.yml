@@ -50,10 +50,12 @@ install:
       Write-Host "Unzippind..."
       $dest = "$($env:APPVEYOR_BUILD_FOLDER)\$($env:EXTRA_LIB)"
       cmd /c start /wait 7z x $zipPath -oC:\or-tools
+      cd C:\or-tools\or-tools_VisualStudio2019-64bit_v8.0.8283
+      dir
       mkdir $dest
       copy -r C:\or-tools\or-tools_VisualStudio2019-64bit_v8.0.8283 $dest
       cd $dest
-      dir -file 
+      dir  
       Write-Host "Unzipped in $dest" -ForegroundColor Green
 
 build_script:
