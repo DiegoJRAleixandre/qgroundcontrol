@@ -53,7 +53,7 @@ install:
       cd C:\or-tools\or-tools_VisualStudio2019-64bit_v8.0.8283
       dir
       mkdir $dest
-      copy -r C:\or-tools\or-tools_VisualStudio2019-64bit_v8.0.8283\. $dest
+      copy -r C:\or-tools\or-tools_VisualStudio2019-64bit_v8.0.8283 $dest
       cd $dest
       dir  
       Write-Host "Unzipped in $dest" -ForegroundColor Green
