@@ -50,6 +50,8 @@ install:
       Write-Host "Unzippind..."
       $dest = "$($env:APPVEYOR_BUILD_FOLDER)\$($env:EXTRA_LIB)"
       cmd /c start /wait 7z x $zipPath -o $dest
+      cd $dest
+      dir -file 
       Write-Host "Unzipped in $dest" -ForegroundColor Green
 
 build_script:
