@@ -12,7 +12,7 @@ environment:
     SHADOW_BUILD_DIR: C:\projects\qgroundcontrol\build_windows_install
     QT_JOM_DIR: C:\Qt-QGC-5.12.6\Tools\QtCreator\bin
     QT_QMAKE_DIR: C:\Qt-QGC-5.12.6\5.12.6\msvc2017_64\bin
-    EXTRA_LIB: custom\src\Test\or-tools
+    EXTRA_LIB: custom\src\Test
 
 install:
   - git submodule update --init --recursive
@@ -52,10 +52,10 @@ install:
       cmd /c start /wait 7z x $zipPath -oC:\or-tools
       cd C:\or-tools\or-tools_VisualStudio2019-64bit_v8.0.8283
       dir
-      mkdir $dest
       copy -r C:\or-tools\or-tools_VisualStudio2019-64bit_v8.0.8283 $dest
+      Rename-Item -Path C:\or-tools\or-tools_VisualStudio2019-64bit_v8.0.8283 or-tools
       cd $dest
-      dir  
+      dir
       Write-Host "Unzipped in $dest" -ForegroundColor Green
 
 build_script:
