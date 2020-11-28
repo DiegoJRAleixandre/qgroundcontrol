@@ -9,7 +9,7 @@ env:
     - SHADOW_BUILD_DIR=/tmp/shadow_build_dir
     - CODESIGN=nocodesign
     - secure: RGovyUnMw3fp/bHZi058JvANT1rYmNqrsuSYew0cIgirO6YbMHr/rsjwCm1FTYpBl8s1zgr+u2b8ftYnfnCz2YT+Aip4NWrVYpVU0FEmfytGILrnUS0pjlt8m7fU9AKR1ElOSll7yw7e1kftynN39Q321etvwbLZcXon6zz0suE=
-    - EXTRA_LIB=/tmp/shadow_build_dir/custom/src/Test
+    # - EXTRA_LIB=/tmp/shadow_build_dir/custom/src/Test
 
 jobs:
     fast_finish: true
@@ -115,7 +115,7 @@ install:
  - if [ "${SPEC}" = "linux-g++-64" ]; then
         wget --quiet https://github.com/google/or-tools/releases/download/v8.0/or-tools_ubuntu-20.04_v8.0.8283.tar.gz &&
         tar -xzvf or-tools_ubuntu-20.04_v8.0.8283.tar.gz -C $EXTRA_LIB &&
-        mv $EXTRA_LIB/or-tools_Ubuntu-20.04-64bit_v8.0.8283 $EXTRA_LIB/or-tools
+        mv /tmp/shadow_build_dir/custom/src/Test/or-tools_Ubuntu-20.04-64bit_v8.0.8283 /tmp/shadow_build_dir/custom/src/Test/or-tools
         ;
     fi
 
@@ -169,8 +169,8 @@ install:
   #or-tools mac
   - if [ "${SPEC}" = "macx-clang" ]; then
         wget --quiet https://github.com/google/or-tools/releases/download/v8.0/or-tools_MacOsX-10.15.7_v8.0.8283.tar.gz &&
-        tar -xzvf or-tools_ubuntu-20.04_v8.0.8283.tar.gz -C $EXTRA_LIB &&
-        mv $EXTRA_LIB/or-tools_Ubuntu-20.04-64bit_v8.0.8283 $EXTRA_LIB/or-tools
+        tar -xzvf or-tools_MacOsX-10.15.7_v8.0.8283.tar.gz -C $EXTRA_LIB &&
+        mv /tmp/shadow_build_dir/custom/src/Test/or-tools_MacOsX-10.15.7_v8.0.8283.tar.gz /tmp/shadow_build_dir/custom/src/Test/or-tools
         ;
     fi
   # ios dependencies: qt
