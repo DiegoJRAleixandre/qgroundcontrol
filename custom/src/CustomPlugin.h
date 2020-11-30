@@ -34,7 +34,7 @@ public:
 #if defined(Q_OS_LINUX)
     double      toolbarHeightMultiplier         () final { return 1.25; }
 #endif
-    //QUrl        flyViewOverlay                  () const final { return QUrl::fromUserInput("qrc:/custom/CustomFlyView.qml"); }
+    QUrl        flyViewOverlay                  () const final { return QUrl::fromUserInput("qrc:/custom/CustomFlyView.qml"); }
     // TODO: Can't access QGCPalette without some workarounds, change this upstream
     QColor      toolbarBackgroundLight          () const final;
     QColor      toolbarBackgroundDark           () const final;

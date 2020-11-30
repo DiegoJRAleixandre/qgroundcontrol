@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/custom">
+        <file alias="CustomFlyView.qml">res/Custom/CustomFlyView.qml</file>
     </qresource>
     <qresource prefix="custom/img">
         <file alias="void.png">res/Images/void.png</file>
