@@ -25,7 +25,7 @@ public:
     QList<MAV_AUTOPILOT>    supportedFirmwareTypes      () const override;
     FirmwarePlugin*         firmwarePluginForAutopilot  (MAV_AUTOPILOT autopilotType, MAV_TYPE vehicleType) override;
 private:
-    CustomFirmwarePlugin*   _pluginInstance;
+    CustomFirmwarePlugin*   plugin;
 };
 
 extern CustomFirmwarePluginFactory CustomFirmwarePluginFactoryImp;

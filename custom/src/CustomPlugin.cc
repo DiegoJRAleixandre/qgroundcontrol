@@ -16,8 +16,6 @@
 #include "MAVLinkLogManager.h"
 
 #include "CustomPlugin.h"
-#include "CustomQuickInterface.h"
-#include "CustomVideoManager.h"
 
 #include "MultiVehicleManager.h"
 #include "QGCApplication.h"
@@ -28,45 +26,11 @@
 
 QGC_LOGGING_CATEGORY(CustomLog, "CustomLog")
 
-CustomVideoReceiver::CustomVideoReceiver(QObject* parent)
-    : VideoReceiver(parent)
-{
-#if defined(QGC_GST_STREAMING)
-    //-- Shorter RTSP test interval
-    _restart_time_ms = 1000;
-#endif
-}
-
-CustomVideoReceiver::~CustomVideoReceiver()
-{
-}
-
-//-----------------------------------------------------------------------------
-static QObject*
-customQuickInterfaceSingletonFactory(QQmlEngine*, QJSEngine*)
-{
-    qCDebug(CustomLog) << "Creating CustomQuickInterface instance";
-    CustomQuickInterface* pIFace = new CustomQuickInterface();
-    auto* pPlug = qobject_cast<CustomPlugin*>(qgcApp()->toolbox()->corePlugin());
-    if(pPlug) {
-        pIFace->init();
-    } else {
-        qCritical() << "Error obtaining instance of CustomPlugin";
-    }
-    return pIFace;
-}
 
 //-----------------------------------------------------------------------------
 CustomOptions::CustomOptions(CustomPlugin*, QObject* parent)
     : QGCOptions(parent)
 {
-}
-
-//-----------------------------------------------------------------------------
-bool
-CustomOptions::showFirmwareUpgrade() const
-{
-    return qgcApp()->toolbox()->corePlugin()->showAdvancedUI();
 }
 
 QColor
@@ -99,10 +63,7 @@ void
 CustomPlugin::setToolbox(QGCToolbox* toolbox)
 {
     QGCCorePlugin::setToolbox(toolbox);
-    qmlRegisterSingletonType<CustomQuickInterface>("CustomQuickInterface", 1, 0, "CustomQuickInterface", customQuickInterfaceSingletonFactory);
-    //-- Disable automatic logging
-    toolbox->mavlinkLogManager()->setEnableAutoStart(false);
-    toolbox->mavlinkLogManager()->setEnableAutoUpload(false);
+    
     connect(qgcApp()->toolbox()->corePlugin(), &QGCCorePlugin::showAdvancedUIChanged, this, &CustomPlugin::_advancedChanged);
 }
 
@@ -193,27 +154,11 @@ CustomPlugin::overrideSettingsGroupVisibility(QString name)
 }
 
 //-----------------------------------------------------------------------------
-VideoManager*
-CustomPlugin::createVideoManager(QGCApplication *app, QGCToolbox *toolbox)
-{
-    return new CustomVideoManager(app, toolbox);
-}
-
-//-----------------------------------------------------------------------------
-VideoReceiver*
-CustomPlugin::createVideoReceiver(QObject* parent)
-{
-    return new CustomVideoReceiver(parent);
-}
-
-//-----------------------------------------------------------------------------
 QQmlApplicationEngine*
 CustomPlugin::createRootWindow(QObject *parent)
 {
     QQmlApplicationEngine* pEngine = new QQmlApplicationEngine(parent);
     pEngine->addImportPath("qrc:/qml");
-    pEngine->addImportPath("qrc:/Custom/Widgets");
-    pEngine->addImportPath("qrc:/Custom/Camera");
     pEngine->rootContext()->setContextProperty("joystickManager",   qgcApp()->toolbox()->joystickManager());
     pEngine->rootContext()->setContextProperty("debugMessageModel", AppMessages::getModel());
     pEngine->load(QUrl(QStringLiteral("qrc:/qml/MainRootWindow.qml")));

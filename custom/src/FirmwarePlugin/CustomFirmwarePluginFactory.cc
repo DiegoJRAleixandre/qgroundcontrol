@@ -17,25 +17,25 @@
 CustomFirmwarePluginFactory CustomFirmwarePluginFactoryImp;
 
 CustomFirmwarePluginFactory::CustomFirmwarePluginFactory()
-    : _pluginInstance(nullptr)
+    : plugin(nullptr)
 {
 }
 
 QList<MAV_AUTOPILOT> CustomFirmwarePluginFactory::supportedFirmwareTypes() const
 {
     QList<MAV_AUTOPILOT> list;
-    list.append(MAV_AUTOPILOT_PX4);
+    list.append(MAV_AUTOPILOT_ARDUPILOTMEGA);
     return list;
 }
 
-FirmwarePlugin* CustomFirmwarePluginFactory::firmwarePluginForAutopilot(MAV_AUTOPILOT autopilotType, MAV_TYPE vehicleType)
+FirmwarePlugin* CustomFirmwarePluginFactory::firmwarePluginForAutopilot(MAV_AUTOPILOT firmwareType, MAV_TYPE vehicleType)
 {
     Q_UNUSED(vehicleType);
-    if (autopilotType == MAV_AUTOPILOT_PX4) {
-        if (!_pluginInstance) {
-            _pluginInstance = new CustomFirmwarePlugin;
+    if (firmwareType == MAV_AUTOPILOT_ARDUPILOTMEGA) {
+        if (!plugin) {
+            plugin = new CustomFirmwarePlugin;
         }
-        return _pluginInstance;
+        return plugin;
     }
     return nullptr;
 }
