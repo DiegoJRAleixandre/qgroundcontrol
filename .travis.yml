@@ -151,9 +151,7 @@ install:
 
   - if [[ "${SPEC}" = "macx-clang" ]]; then
         wget --quiet https://s3-us-west-2.amazonaws.com/qgroundcontrol/dependencies/osx-gstreamer.tar.bz2 &&
-        sudo tar jxf osx-gstreamer.tar.bz2 -C /Library/Frameworks &&
-        curl https://raw.githubusercontent.com/modeckrus/mac-os-cpp-qgroundcontrol/main/or-tools.zip > or-tools.zip &&
-        tar -xzvf or-tools.zip -C /tmp/shadow_build_dir/custom/src/Test/or-tools
+        sudo tar jxf osx-gstreamer.tar.bz2 -C /Library/Frameworks
         ;
     fi
 
@@ -162,6 +160,12 @@ install:
         export QT_QPA_PLATFORM_PLUGIN_PATH=/tmp/$QT_DIR/plugins &&
         export QML2_IMPORT_PATH=/tmp/$QT_DIR/qml &&
         export PATH=/tmp/$QT_DIR/bin:$PATH
+        ;
+    fi
+
+  - if [ "${SPEC}" = "macx-clang" ]; then
+        curl https://raw.githubusercontent.com/modeckrus/mac-os-cpp-qgroundcontrol/main/or-tools.tar.bz2 > or-tools.tar.bz2
+        sudo tar -jxf or-tools.tar.bz2 -C ${SHADOW_BUILD_DIR}/custom/src/Test
         ;
     fi
 
