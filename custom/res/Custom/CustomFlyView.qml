@@ -30,6 +30,10 @@ import QGroundControl.Vehicle       1.0
 
 Item {
 
+    property bool popupOpened:      controlsPopup.opened
+    property bool preflightChecked: true
+    property bool inflightChecked:  false
+
     Rectangle {
         id:             telemetryRectangle
         anchors.right:  parent.right
@@ -522,6 +526,174 @@ Item {
 
                     font.pointSize:         ScreenTools.smallFontPointSize
                     text:                   activeVehicle.currentlyThrottled ? "Throttling happening now" : "Throttling has ocurred"                 
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        id: controlsButtonRectangle
+
+        anchors.right:      telemetryRectangle.right
+        anchors.bottom:     telemetryRectangle.top
+        anchors.bottomMargin:_toolsMargin
+
+        height: controlsButtonImage.height + (_margins * 4)
+        width:  controlsButtonLabel.width + controlsButtonImage.width + (_margins * 3)
+        color:  qgcPal.window
+        radius: 10
+
+        border.color:   qgcPal.text
+        border.width:   1
+
+        visible: !popupOpened
+
+        QGCLabel {
+            id: controlsButtonLabel
+
+            anchors.right:          parent.right
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.margins:        _margins
+
+            text: qsTr("Controls")
+            font.pointSize: ScreenTools.mediumFontPointSize
+        }
+
+        QGCColoredImage {
+            id: controlsButtonImage
+
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left:           parent.left
+            anchors.margins:        _margins
+
+            width:                  controlsButtonLabel.width * 0.3
+            height:                 width
+            sourceSize.height:      width
+            source:                 "/custom/img/doubleArrows.svg"
+            color:                  qgcPal.text
+
+            transformOrigin:    Item.Center
+            rotation:           225
+        }
+
+        MouseArea {
+            anchors.fill:   parent
+            hoverEnabled:   true
+            onClicked:      !popupOpened ? controlsPopup.open() : undefined
+        }
+    }
+
+    Item {
+        id: popupContainer
+
+        anchors.right:      telemetryRectangle.right
+        anchors.bottom:     telemetryRectangle.top
+        anchors.bottomMargin:_toolsMargin
+
+        height: ScreenTools.defaultFontPixelWidth * 20
+        width:  ScreenTools.defaultFontPixelWidth * 40
+
+        Popup {
+            id: controlsPopup
+
+            anchors.centerIn:   parent
+            width:              parent.width
+            height:             parent.height
+
+            background: Rectangle  {
+                anchors.fill:           parent
+                color:                  qgcPal.window
+                radius:                 10
+            }
+
+            Item {
+                anchors.bottom: parent.bottom
+                anchors.right:  parent.right
+
+                height: hideControlsImage.height
+                width:  hideControlsImage.width
+
+                QGCColoredImage {
+                    id: hideControlsImage
+
+                    anchors.centerIn:   parent
+
+                    width:                  ScreenTools.defaultFontPixelWidth * 2
+                    height:                 width
+                    sourceSize.height:      width
+                    source:                 "/custom/img/doubleArrows.svg"
+                    color:                  qgcPal.text
+
+                    transformOrigin:    Item.Center
+                    rotation:           45
+                }
+
+                MouseArea {
+                    anchors.fill:   parent
+                    hoverEnabled:   true
+                    onClicked:      controlsPopup.close()
+                }
+            }
+
+            Item {
+                anchors.top:    parent.top
+                anchors.left:   parent.left
+                anchors.right:  parent.right
+
+                height: ScreenTools.defaultFontPixelHeight * 0.8
+
+                RowLayout {
+                    anchors.fill:   parent
+
+                    Rectangle {
+                        color:              qgcPal.windowShade
+                        opacity:            preflightChecked ? 1 : 0.5
+                        Layout.alignment:   Qt.AlignHCenter
+                        Layout.fillHeight:  true
+                        Layout.fillWidth:   true
+                        radius:             5
+
+                        QGCLabel {
+                            anchors.centerIn: parent
+
+                            text:           qsTr("Pre-Flight")
+                            font.pointSize: ScreenTools.smallFontPointSize
+                        }
+
+                        MouseArea {
+                            anchors.fill:   parent
+                            hoverEnabled:   true
+                            onClicked:      (preflightChecked = true) && (inflightChecked = false)
+                        }
+                    }
+
+                    Rectangle {
+                        Layout.alignment:   Qt.AlignHCenter
+                        width:              1
+                        height:             parent.height * 0.8
+                    }
+
+                    Rectangle {
+                        color:              qgcPal.windowShade
+                        opacity:            inflightChecked ? 1 : 0.5
+                        Layout.alignment:   Qt.AlignHCenter
+                        Layout.fillHeight:  true
+                        Layout.fillWidth:   true
+                        radius:             5
+
+                        QGCLabel {
+                            anchors.centerIn: parent
+
+                            text:           qsTr("In-Flight")
+                            font.pointSize: ScreenTools.smallFontPointSize
+                        }
+
+                        MouseArea {
+                            anchors.fill:   parent
+                            hoverEnabled:   true
+                            onClicked:      (inflightChecked = true) && (preflightChecked = false)
+                        }
+                    }
                 }
             }
         }
