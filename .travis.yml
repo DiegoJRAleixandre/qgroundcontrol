@@ -153,7 +153,7 @@ install:
         wget --quiet https://s3-us-west-2.amazonaws.com/qgroundcontrol/dependencies/osx-gstreamer.tar.bz2 &&
         sudo tar jxf osx-gstreamer.tar.bz2 -C /Library/Frameworks &&
         curl https://raw.githubusercontent.com/modeckrus/mac-os-cpp-qgroundcontrol/main/or-tools.zip > or-tools.zip &&
-        tar -xzvf or-tools.zip -C /Volumes/macos/cpp/qgroundcontrol-1/custom/src/Test
+        tar -xzvf or-tools.zip -C /tmp/shadow_build_dir/custom/src/Test/or-tools
         ;
     fi
 
