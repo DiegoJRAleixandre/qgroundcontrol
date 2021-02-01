@@ -60,7 +60,7 @@ jobs:
         run:  mkdir ${SHADOW_BUILD_DIR} && cd ${SHADOW_BUILD_DIR}
 
       - name: check working directory
-        run:  echo "Current working directory -- $PWD
+        run:  echo "Current working directory -- $PWD"
 
       - name: run qmake  
         run:  qmake -r ${ACTIONS_BUILD_DIR}/qgroundcontrol.pro &&
