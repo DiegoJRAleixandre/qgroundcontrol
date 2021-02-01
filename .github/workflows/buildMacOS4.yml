@@ -55,8 +55,13 @@ jobs:
               export PATH=/tmp/$QT_DIR/bin:$PATH
 
         
-      - name: create qmake
+      - name: cd into directory shadow_build
         #if:   ${{SPEC}}" == "macx-clang"
-        run:  mkdir ${SHADOW_BUILD_DIR} && cd ${SHADOW_BUILD_DIR} &&
-              qmake -r ${ACTIONS_BUILD_DIR}/qgroundcontrol.pro &&
+        run:  mkdir ${SHADOW_BUILD_DIR} && cd ${SHADOW_BUILD_DIR}
+
+      - name: check working directory
+        run:  echo "Current working directory -- $PWD
+
+      - name: run qmake  
+        run:  qmake -r ${ACTIONS_BUILD_DIR}/qgroundcontrol.pro &&
               xcodebuild -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$JOBS -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c && $(exit ${PIPESTATUS[0]})
