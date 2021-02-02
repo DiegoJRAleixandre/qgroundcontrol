@@ -52,12 +52,6 @@ jobs:
         run:  |
               wget --quiet https://qgroundcontrol.s3-us-west-2.amazonaws.com/dependencies/gstreamer-osx-1.18.1.tar.bz2
               sudo tar -zxf gstreamer-osx-1.18.1.tar.bz2 -C /Library/Frameworks
-
-      #- name: Needed exports
-      #  run:  export QT_DIR=Qt5.12-clang_64/5.12.6/clang_64
-      #        export QT_QPA_PLATFORM_PLUGIN_PATH=${{ runner.temp }}/$QT_DIR/plugins
-      #        export QML2_IMPORT_PATH=${{ runner.temp }}/$QT_DIR/qml
-      #        export PATH=${{ runner.temp }}/$QT_DIR/bin:$PATH
         
       - name: mkdir directory shadow_build
         run:  mkdir ${{ runner.temp }}/shadow_build_dir
@@ -69,12 +63,27 @@ jobs:
               qmake -r ${ACTIONS_BUILD_DIR}/qgroundcontrol.pro CONFIG+=${CONFIG}
               make -j$JOBS
 
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
+      - name: list folders inside
+        working-directory: ${{ runner.temp }}/shadow_build_dir
+        run:  ls
+
+      - name: Create Release
+        working-directory: ${{ runner.temp }}/shadow_build_dir
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${SHADOW_BUILD_DIR}/qgc-app/package/QGroundControl.*
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ${SHADOW_BUILD_DIR}/qgc-app/
           asset_name: macOSTest
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "This is the first test for QGC in MacOS"
