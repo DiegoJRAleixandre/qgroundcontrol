@@ -66,7 +66,7 @@ jobs:
         working-directory: ${{ runner.temp }}/shadow_build_dir
         run:  |
               echo "Current working directory -- $PWD"
-              qmake -r ${ACTIONS_BUILD_DIR}/qgroundcontrol.pro
+              qmake -r ${ACTIONS_BUILD_DIR}/qgroundcontrol.pro CONFIG+=${CONFIG}
               make -j$JOBS
 
       - name: Upload binaries to release
