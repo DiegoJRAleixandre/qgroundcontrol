@@ -15,7 +15,7 @@ env:
   SPEC: macx-clang
   CONFIG: installer
   ACTIONS_BUILD_DIR: ${{ github.workspace }}/../qgroundcontrol
-  SHADOW_BUILD_DIR: ${{ runner.temp }}/shadow_build_dir
+  #SHADOW_BUILD_DIR: ${{ runner.temp }}/shadow_build_dir
 
 
 
@@ -62,7 +62,7 @@ jobs:
         
       - name: cd into directory shadow_build
         #if:   ${{SPEC}}" == "macx-clang"
-        run:  mkdir ${SHADOW_BUILD_DIR} && cd ${SHADOW_BUILD_DIR}
+        run:  mkdir ${{ runner.temp }}/shadow_build_dir && cd ${{ runner.temp }}/shadow_build_dir
 
       - name: check working directory 3
         run:  echo "Current working directory -- $PWD"
