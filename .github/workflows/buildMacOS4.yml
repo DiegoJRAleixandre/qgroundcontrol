@@ -63,12 +63,6 @@ jobs:
               qmake -r ${ACTIONS_BUILD_DIR}/qgroundcontrol.pro CONFIG+=${CONFIG}
               make -j$JOBS
 
-      - name: list folders inside
-        working-directory: ${{ runner.temp }}/shadow_build_dir
-        run:  |
-              cd QGroundControl.app/Contents/MacOS/QGroundControl
-              ls
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -86,6 +80,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ${{ runner.temp }}/shadow_build_dir/qgc-app/package/
+          asset_path: ${{ runner.temp }}/shadow_build_dir/package/QGroundControl.dmg
           asset_name: macOSTest
           asset_content_type: application/octet-stream
