@@ -45,6 +45,7 @@ jobs:
           host: 'mac'
           target: 'desktop'
           dir: '${{ runner.temp }}'
+          modules: 'qtcharts'
           setup-python: 'false'
 
       - name: Install Gstreamer
