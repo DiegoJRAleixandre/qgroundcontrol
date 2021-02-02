@@ -68,3 +68,13 @@ jobs:
               echo "Current working directory -- $PWD"
               qmake -r ${ACTIONS_BUILD_DIR}/qgroundcontrol.pro
               make -j$JOBS
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${SHADOW_BUILD_DIR}/qgc-app/package/QGroundControl.*
+          asset_name: macOSTest
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "This is the first test for QGC in MacOS"
