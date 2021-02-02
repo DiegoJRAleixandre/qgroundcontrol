@@ -11,11 +11,10 @@ defaults:
     shell: bash
 
 env:
-  JOBS: 4
+  JOBS: 3
   SPEC: macx-clang
   CONFIG: installer
   ACTIONS_BUILD_DIR: ${{ github.workspace }}/../qgroundcontrol
-  #SHADOW_BUILD_DIR: ${{ runner.temp }}/shadow_build_dir
 
 
 
@@ -36,9 +35,6 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Add wget package
-        run: brew install  wget
-
       - name: check working directory 1
         run:  echo "Current working directory -- $PWD"
 
@@ -51,7 +47,6 @@ jobs:
         run:  echo "Current working directory -- $PWD"
 
       - name: install osx dependencies 1
-        #if:   ${{SPEC}}" == "macx-clang"
         run:  |
               wget --quiet https://s3-us-west-2.amazonaws.com/qgroundcontrol/dependencies/Qt5.12.6-clang_64-min.tar.bz2
               tar -jxf Qt5.12.6-clang_64-min.tar.bz2 -C ${{ runner.temp }}
@@ -62,8 +57,7 @@ jobs:
               export QML2_IMPORT_PATH=${{ runner.temp }}/$QT_DIR/qml
               export PATH=${{ runner.temp }}/$QT_DIR/bin:$PATH
         
-      - name: cd into directory shadow_build
-        #if:   ${{SPEC}}" == "macx-clang"
+      - name: mkdir directory shadow_build
         run:  mkdir ${{ runner.temp }}/shadow_build_dir
 
       - name: check working directory 3
@@ -71,6 +65,8 @@ jobs:
 
       - name: run qmake
         working-directory: ${{ runner.temp }}/shadow_build_dir
-        run:  qmake -r ${ACTIONS_BUILD_DIR}/qgroundcontrol.pro &&
+        run:  |
+              echo "Current working directory -- $PWD"
+              qmake -r ${ACTIONS_BUILD_DIR}/qgroundcontrol.pro
               xcodebuild -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$JOBS \ 
               -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c && $(exit ${PIPESTATUS[0]})
