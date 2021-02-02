@@ -67,5 +67,6 @@ jobs:
         run:  |
               echo "Current working directory -- $PWD"
               qmake -r ${ACTIONS_BUILD_DIR}/qgroundcontrol.pro
+              make -j$JOBS
               xcodebuild -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$JOBS \ 
               -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c && $(exit ${PIPESTATUS[0]})
