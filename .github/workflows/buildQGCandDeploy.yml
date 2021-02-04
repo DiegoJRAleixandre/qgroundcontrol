@@ -4,14 +4,16 @@ on:
     push:
         branches:
         - github_actions_PR
+        #Only run if a release tag is attached
+        tags:
+        - v4.1.*
 
 defaults:
   run:
     shell: bash
 
 env:
-  JOBS: 3
-  SPEC: macx-clang
+  JOBS: 4
   CONFIG: installer
   ACTIONS_BUILD_DIR: ${{ github.workspace }}/../qgroundcontrol
 
@@ -21,17 +23,19 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
+        #Only running MacOS right now, but we leave this options 
+        #for future builds of all distros
         exclude:
           - os: ubuntu-latest
           - os: windows-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v2
         with:
           submodules: recursive
 
-      - name: Before install
+      - name: Fetch full repo and define simultaneous jobs for make
         run:  |
               git fetch --unshallow && git fetch --all --tags
               export JOBS=$((`sysctl -n hw.ncpu`+1))
