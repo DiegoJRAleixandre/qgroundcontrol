@@ -1,12 +1,17 @@
-name: Build QGC MacOS 
+name: Build QGC and upload to release 
 
 on: 
     push:
-      #branches:
-      #We need a branch, for the PR change to master
-        #- github_actions_PR
+      #Every time a tag with name v* (e.g: vX.Y.Z) is pushed,
+      #this action will trigger.
       tags:
         - v*
+      #If instead of a tag (or with both restricctions simultaniously)
+      #you prefer to trigger the action uppon push on a branch,
+      #remove the "tags:" flag and add the "branches:" one. E.g:
+      #push:
+        #branches:
+          #- your_branch
 
 defaults:
   run:
@@ -35,9 +40,6 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Fetch full repo and define simultaneous jobs for make
-        run:  export JOBS=$((`sysctl -n hw.ncpu`+1))
-
       - name: install QT via action
         uses: jurplel/install-qt-action@v2
         with: 
@@ -59,10 +61,11 @@ jobs:
       - name: run qmake and build
         working-directory: ${{ runner.temp }}/shadow_build_dir
         run:  |
+              export JOBS=$((`sysctl -n hw.ncpu`+1))
               qmake -r ${ACTIONS_BUILD_DIR}/qgroundcontrol.pro CONFIG+=${CONFIG}
               make -j$JOBS
 
-      - name: Upload binaries to release
+      - name: Upload build artifacts to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
