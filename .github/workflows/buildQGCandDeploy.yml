@@ -2,9 +2,9 @@ name: Build QGC MacOS
 
 on: 
     push:
-      branches:
+      #branches:
       #We need a branch, for the PR change to master
-        - github_actions_PR
+        #- github_actions_PR
       tags:
         - v4.1.*
 
