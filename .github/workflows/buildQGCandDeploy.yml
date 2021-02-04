@@ -2,9 +2,6 @@ name: Build QGC MacOS
 
 on: 
     push:
-        branches:
-        - github_actions_PR
-        #Only run if a release tag is attached
         tags:
         - v4.1.*
 
@@ -70,8 +67,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${GITHUB_REF/refs\/tags\//}
+          release_name: ${GITHUB_REF/refs\/tags\//}
           draft: false
           prerelease: false
       - name: Upload Release Asset
