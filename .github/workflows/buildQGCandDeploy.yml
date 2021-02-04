@@ -36,9 +36,7 @@ jobs:
           submodules: recursive
 
       - name: Fetch full repo and define simultaneous jobs for make
-        run:  |
-              git fetch --unshallow && git fetch --all --tags
-              export JOBS=$((`sysctl -n hw.ncpu`+1))
+        run:  export JOBS=$((`sysctl -n hw.ncpu`+1))
 
       - name: install QT via action
         uses: jurplel/install-qt-action@v2
