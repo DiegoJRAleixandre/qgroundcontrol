@@ -61,7 +61,7 @@ jobs:
       - name: download OrTools
         run:  |
               curl https://raw.githubusercontent.com/modeckrus/mac-os-cpp-qgroundcontrol/main/or-tools.tar.bz2 > or-tools.tar.bz2 &&
-              sudo tar -jxf or-tools.tar.bz2 -C ${TRAVIS_BUILD_DIR}/custom/src/Test
+              sudo tar -jxf or-tools.tar.bz2 -C ${ACTIONS_BUILD_DIR}/custom/src/Test
 
       - name: run qmake and build
         working-directory: ${{ runner.temp }}/shadow_build_dir
