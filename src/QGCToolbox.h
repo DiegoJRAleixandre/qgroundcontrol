@@ -13,6 +13,13 @@
 
 #include <QObject>
 
+//----------DELETE-----------
+#include "ortools/constraint_solver/routing.h"
+#include "ortools/constraint_solver/routing_enums.pb.h"
+#include "ortools/constraint_solver/routing_index_manager.h"
+#include "ortools/constraint_solver/routing_parameters.h"
+//----------DELETE-----------
+
 class FactSystem;
 class FirmwarePluginManager;
 class AudioOutput;

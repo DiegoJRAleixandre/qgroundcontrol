@@ -67,6 +67,17 @@ HEADERS += \
 INCLUDEPATH += \
     $$PWD/src \
 
+# or-tools stuff
+
+ORTOOLS_PATH = $$PWD/or-tools/
+
+INCLUDEPATH += $${ORTOOLS_PATH}/include
+LinuxBuild{
+    LIBS += -L$${ORTOOLS_PATH}/lib -lCbc -lglog -lgflags -lCbcSolver -lCbc -lOsiCbc -lCgl -lClpSolver -lClp -lOsiClp -lOsi -lCoinUtils -lortools -lz -lrt -lpthread
+}else: MacBuild{
+    LIBS += -L$${ORTOOLS_PATH}/lib -lortools
+}
+
 
 #Test
 include(./src/Test/test.pri)

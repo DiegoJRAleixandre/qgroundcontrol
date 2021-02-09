@@ -129,6 +129,10 @@ void QGCToolbox::setChildToolboxes(void)
 #if defined(QGC_ENABLE_PAIRING)
     _pairingManager->setToolbox(this);
 #endif
+
+//Just for test DELETE
+const RoutingIndexManager::NodeIndex    depot{0};
+//Just for test DELETE
 }
 
 void QGCToolbox::_scanAndLoadPlugins(QGCApplication* app)

@@ -58,11 +58,6 @@ jobs:
       - name: mkdir directory shadow_build
         run:  mkdir ${{ runner.temp }}/shadow_build_dir
 
-      - name: download OrTools
-        run:  |
-              curl https://raw.githubusercontent.com/modeckrus/mac-os-cpp-qgroundcontrol/main/or-tools.tar.bz2 > or-tools.tar.bz2 &&
-              sudo tar -jxf or-tools.tar.bz2 -C ${ACTIONS_BUILD_DIR}/custom/src/Test
-
       - name: run qmake and build
         working-directory: ${{ runner.temp }}/shadow_build_dir
         run:  |
@@ -74,7 +69,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ runner.temp }}/shadow_build_dir/package/QGroundControl.dmg
+          file: ${{ runner.temp }}/shadow_build_dir/package/*.dmg
           asset_name: QGroundControl.dmg
           tag: ${{ github.ref }}
           overwrite: true
