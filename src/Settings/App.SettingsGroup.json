@@ -20,6 +20,16 @@
     "shortDescription": "Offline editing cruise speed",
     "longDescription":  "This value defines the default cruising speed for forward flight vehicles for use in calculating mission statistics. It does not modify the flight speed for a specific flight plan.",
     "type":             "double",
+    "defaultValue":     30.0,
+    "min":              1.0,
+    "units":            "m/s",
+    "decimalPlaces":    2
+},
+{
+    "name":             "offlineEditingSurveySpeed",
+    "shortDescription": "Offline editing survey speed",
+    "longDescription":  "This value defines the default speed for forward flight vehicles in surveys for use in calculating mission statistics. It does not modify the flight speed for a specific flight plan.",
+    "type":             "double",
     "defaultValue":     15.0,
     "min":              1.0,
     "units":            "m/s",

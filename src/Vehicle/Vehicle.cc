@@ -138,6 +138,7 @@ Vehicle::Vehicle(LinkInterface*             link,
     , _gpsRawIntMessageAvailable(false)
     , _globalPositionIntMessageAvailable(false)
     , _defaultCruiseSpeed(_settingsManager->appSettings()->offlineEditingCruiseSpeed()->rawValue().toDouble())
+    , _defaultSurveySpeed(_settingsManager->appSettings()->offlineEditingSurveySpeed()->rawValue().toDouble())
     , _defaultHoverSpeed(_settingsManager->appSettings()->offlineEditingHoverSpeed()->rawValue().toDouble())
     , _telemetryRRSSI(0)
     , _telemetryLRSSI(0)
@@ -342,6 +343,7 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     , _gpsRawIntMessageAvailable(false)
     , _globalPositionIntMessageAvailable(false)
     , _defaultCruiseSpeed(_settingsManager->appSettings()->offlineEditingCruiseSpeed()->rawValue().toDouble())
+    , _defaultSurveySpeed(_settingsManager->appSettings()->offlineEditingSurveySpeed()->rawValue().toDouble())
     , _defaultHoverSpeed(_settingsManager->appSettings()->offlineEditingHoverSpeed()->rawValue().toDouble())
     , _mavlinkProtocolRequestComplete(true)
     , _maxProtoVersion(200)
@@ -423,6 +425,7 @@ Vehicle::Vehicle(MAV_AUTOPILOT              firmwareType,
     connect(_settingsManager->appSettings()->offlineEditingFirmwareType(),  &Fact::rawValueChanged, this, &Vehicle::_offlineFirmwareTypeSettingChanged);
     connect(_settingsManager->appSettings()->offlineEditingVehicleType(),   &Fact::rawValueChanged, this, &Vehicle::_offlineVehicleTypeSettingChanged);
     connect(_settingsManager->appSettings()->offlineEditingCruiseSpeed(),   &Fact::rawValueChanged, this, &Vehicle::_offlineCruiseSpeedSettingChanged);
+    connect(_settingsManager->appSettings()->offlineEditingSurveySpeed(),   &Fact::rawValueChanged, this, &Vehicle::_offlineSurveySpeedSettingChanged);
     connect(_settingsManager->appSettings()->offlineEditingHoverSpeed(),    &Fact::rawValueChanged, this, &Vehicle::_offlineHoverSpeedSettingChanged);
 
     _firmwarePlugin->initializeVehicle(this);
@@ -588,6 +591,12 @@ void Vehicle::_offlineCruiseSpeedSettingChanged(QVariant value)
 {
     _defaultCruiseSpeed = value.toDouble();
     emit defaultCruiseSpeedChanged(_defaultCruiseSpeed);
+}
+
+void Vehicle::_offlineSurveySpeedSettingChanged(QVariant value)
+{
+    _defaultSurveySpeed = value.toDouble();
+    emit defaultSurveySpeedChanged(_defaultSurveySpeed);
 }
 
 void Vehicle::_offlineHoverSpeedSettingChanged(QVariant value)

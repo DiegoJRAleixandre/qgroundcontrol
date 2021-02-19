@@ -949,6 +949,7 @@ public:
     QString         takeControlFlightMode   () const;
     QString         followFlightMode        () const;
     double          defaultCruiseSpeed      () const { return _defaultCruiseSpeed; }
+    double          defaultSurveySpeed      () const { return _defaultSurveySpeed; }
     double          defaultHoverSpeed       () const { return _defaultHoverSpeed; }
     QString         firmwareTypeString      () const;
     QString         vehicleTypeString       () const;
@@ -1145,6 +1146,7 @@ signals:
     void soloFirmwareChanged            (bool soloFirmware);
     void unhealthySensorsChanged        ();
     void defaultCruiseSpeedChanged      (double cruiseSpeed);
+    void defaultSurveySpeedChanged      (double surveySpeed);
     void defaultHoverSpeedChanged       (double hoverSpeed);
     void firmwareTypeChanged            ();
     void vehicleTypeChanged             ();
@@ -1247,6 +1249,7 @@ private slots:
     void _offlineFirmwareTypeSettingChanged(QVariant value);
     void _offlineVehicleTypeSettingChanged(QVariant value);
     void _offlineCruiseSpeedSettingChanged(QVariant value);
+    void _offlineSurveySpeedSettingChanged(QVariant value);
     void _offlineHoverSpeedSettingChanged(QVariant value);
     void _updateHighLatencyLink         (bool sendCommand = true);
 
@@ -1400,6 +1403,7 @@ private:
     bool            _gpsRawIntMessageAvailable;
     bool            _globalPositionIntMessageAvailable;
     double          _defaultCruiseSpeed;
+    double          _defaultSurveySpeed;
     double          _defaultHoverSpeed;
     int             _telemetryRRSSI;
     int             _telemetryLRSSI;

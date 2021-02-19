@@ -162,6 +162,17 @@ Rectangle {
                 }
 
                 QGCLabel {
+                    text:               qsTr("Survey speed")
+                    visible:            _showCruiseSpeed
+                    Layout.fillWidth:   true
+                }
+                FactTextField {
+                    fact:                   QGroundControl.settingsManager.appSettings.offlineEditingSurveySpeed
+                    visible:                _showCruiseSpeed
+                    Layout.preferredWidth:  _fieldWidth
+                }
+
+                QGCLabel {
                     text:               qsTr("Hover speed")
                     visible:            _showHoverSpeed
                     Layout.fillWidth:   true
